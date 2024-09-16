@@ -15,8 +15,12 @@ struct ContentView: View {
         if courses.count == 0 {
             VStack {
                 ProgressView()
+                    .tint(.purple)
                     .padding(.bottom, 10)
                 Text("We're out grabbing the courses...")
+                    .foregroundStyle(.purple)
+                    .font(.title2)
+                    .bold()
             }
                 .onAppear {
                     getCourses()

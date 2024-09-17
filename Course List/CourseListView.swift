@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct CourseListView: View {
     
     @State var courses: [Course] = []
     
@@ -22,13 +22,25 @@ struct ContentView: View {
                     .font(.title2)
                     .bold()
             }
-                .onAppear {
-                    getCourses()
-                }
+            .onAppear {
+                getCourses()
+            }
         } else {
-            List(courses) { course in
-                Text(course.title)
-                
+            ScrollView {
+                VStack {
+                    ForEach(courses) { course in
+                        AsyncImage(url: URL(string: course.image)) { response in
+                            switch response {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            default:
+                                DefaultImageView()
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -52,5 +64,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    CourseListView()
 }

@@ -12,35 +12,29 @@ struct CourseListView: View {
     @State var courses: [Course] = []
     
     var body: some View {
-        if courses.count == 0 {
-            VStack {
-                ProgressView()
-                    .tint(.purple)
-                    .padding(.bottom, 10)
-                Text("We're out grabbing the courses...")
-                    .foregroundStyle(.purple)
-                    .font(.title2)
-                    .bold()
-            }
-            .onAppear {
-                getCourses()
-            }
-        } else {
-            ScrollView {
+        NavigationStack {
+            if courses.count == 0 {
                 VStack {
-                    ForEach(courses) { course in
-                        AsyncImage(url: URL(string: course.image)) { response in
-                            switch response {
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                            default:
-                                DefaultImageView()
-                            }
+                    ProgressView()
+                        .tint(.purple)
+                        .padding(.bottom, 10)
+                    Text("We're out grabbing the courses...")
+                        .foregroundStyle(.purple)
+                        .font(.title2)
+                        .bold()
+                }
+                .onAppear {
+                    getCourses()
+                }
+            } else {
+                ScrollView {
+                    VStack(spacing: 20) {
+                        ForEach(courses) { course in
+                            CourseTileView(course: course)
                         }
                     }
                 }
+                .navigationTitle("ZappyCode Courses")
             }
         }
     }

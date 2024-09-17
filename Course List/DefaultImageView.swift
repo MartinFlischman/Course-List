@@ -19,6 +19,7 @@ struct DefaultImageView: View {
                 .foregroundStyle(.secondary)
         }
         .padding(.vertical, 40)
+        .padding(.bottom, 20)
         .frame(maxWidth: .infinity)
         .background {
             Color.gray
